@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PHP Organize Album Photos And Videos 
+Comment=Album-organizer
+Exec=php /home/fredrik/Apps/playground/album_organizer/tools/php-exiftool.php
+Path=/home/fredrik/Apps/playground/album_organizer/tools
+Icon=utilities-terminal
+Categories=Utility
+StartupNotify=true
+Terminal=true
