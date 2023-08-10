@@ -1,4 +1,5 @@
 /album_organizer/bak
 /album_organizer/files/*
-/album_organizer/tools/bin/*
-/album_organizer/tools/logs/*
+/album_organizer/app/bin/*
+/album_organizer/app/logs/*
+!/album_organizer/app/bin/README.md
