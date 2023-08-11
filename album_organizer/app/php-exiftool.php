@@ -14,6 +14,13 @@ if (!file_exists($exifToolFilePath)) {
   exit;
 }
 
+if (!is_dir($filesDirectory)) {
+  echo "\n";
+  echo "Error: No files-directory under ./album_organizer\n";
+  echo "\n";
+  exit;
+}
+
 function getFileDateTimeData(string $parameter, string $file)
 {
   global $exifToolFilePath;
