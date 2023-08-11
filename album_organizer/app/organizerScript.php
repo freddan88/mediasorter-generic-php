@@ -9,14 +9,18 @@ $exifToolFilePath = "$binDirectory/exiftool";
 
 require_once(__DIR__ . '/inc/OrganizerHelpers.php');
 
+if (PHP_OS === 'WINNT'){
+    $exifToolFilePath = "$exifToolFilePath.exe";
+}
+
 $helper = new OrganizerHelpers($exifToolFilePath);
 
-// if (!file_exists($exifToolFilePath)) {
-//   echo "\n";
-//   echo "Error: Exiftool not found!!!\n";
-//   echo "\n";
-//   exit;
-// }
+if (!file_exists($exifToolFilePath)) {
+  echo "\n";
+  echo "Error: Exiftool not found!!!\n";
+  echo "\n";
+  exit;
+}
 
 if (!is_dir($filesDirectory)) {
   echo "\n";
