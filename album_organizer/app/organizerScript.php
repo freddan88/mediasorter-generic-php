@@ -16,16 +16,16 @@ if (PHP_OS === 'WINNT'){
 $helper = new OrganizerHelpers($exifToolFilePath);
 
 if (!file_exists($exifToolFilePath)) {
-  echo "\n";
-  echo "Error: Exiftool not found!!!\n";
-  echo "\n";
+  echo PHP_EOL;
+  echo "Error: Exiftool not found!!!";
+  echo PHP_EOL;
   exit;
 }
 
 if (!is_dir($filesDirectory)) {
-  echo "\n";
-  echo "Error: No files-directory under ./album_organizer\n";
-  echo "\n";
+  echo PHP_EOL;
+  echo "Error: No files-directory under ./album_organizer";
+  echo PHP_EOL;
   exit;
 }
 
@@ -44,19 +44,20 @@ if ($seq < 1) {
   $seq = 1;
 }
 
-echo "\n";
-echo "Change directory to: $filesDirectory\n";
+chdir($filesDirectory);
+
+echo PHP_EOL;
+echo 'Changed to directory: ' . getcwd();
+echo PHP_EOL;
 
 sleep(1);
-
-chdir($filesDirectory);
 
 $files = $helper->getFilesInDirectory($filesDirectory);
 
 if (count($files) === 0) {
-  echo "\n";
-  echo "No files to sort and rename!!!\n";
-  echo "\n";
+  echo PHP_EOL;
+  echo "No files to sort and rename!!!";
+  echo PHP_EOL;
   exit;
 }
 
@@ -89,6 +90,8 @@ foreach ($files as $file) {
       break;
   }
 
+  echo PHP_EOL;
+
   if ($fileError) {
     $directoryName = 'unsupported';
 
@@ -101,9 +104,8 @@ foreach ($files as $file) {
 
     rename($file, $newFilePath);
 
-    echo "\n";
-    echo "Old file-path: ./$file\n";
-    echo "New file-path: ./$newFilePath\n";
+    echo "Old file-path: ./$file" . PHP_EOL;
+    echo "New file-path: ./$newFilePath" . PHP_EOL;
 
   } else {
     $directoryName = $helper->extractFileYear($dateTimeData);
@@ -118,15 +120,12 @@ foreach ($files as $file) {
     $newFileName = $dateTimeData . '_' . $randomHex . '_' . $paddedSeq . '.' . $fileExtension;
     $newFilePath = "$directoryName/$newFileName";
 
-    rename($file, $newFilePath);
-
     file_put_contents($seqNumberFilePath, ++$seq);
 
-    echo "\n";
-    echo "Old file-path: ./$file\n";
-    echo "New file-path: ./$newFilePath\n";
+    rename($file, $newFilePath);
+
+    echo "Old file-path: ./$file" . PHP_EOL;
+    echo "New file-path: ./$newFilePath" . PHP_EOL;
 
   }
 }
-
-echo "\n";
