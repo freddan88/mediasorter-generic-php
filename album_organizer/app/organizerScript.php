@@ -9,14 +9,14 @@ $exifToolFilePath = "$binDirectory/exiftool";
 
 require_once(__DIR__ . '/inc/OrganizerHelpers.php');
 
+$helper = new OrganizerHelpers($exifToolFilePath);
+
 $win32 = false;
 
 if (PHP_OS === 'WINNT') {
     $exifToolFilePath = "$exifToolFilePath.exe";
     $win32 = true;
 }
-
-$helper = new OrganizerHelpers($exifToolFilePath);
 
 if (!file_exists($exifToolFilePath)) {
     echo PHP_EOL;
@@ -60,7 +60,7 @@ $files = $helper->getFilesInDirectory($filesDirectory);
 if (count($files) === 0) {
     echo PHP_EOL;
     echo "No files to sort and rename!!!";
-    echo $win32 ?  '' : PHP_EOL, PHP_EOL;
+    echo $win32 ? '' : PHP_EOL, PHP_EOL;
     exit;
 }
 
@@ -132,5 +132,5 @@ foreach ($files as $file) {
 
     }
 
-    echo $win32 ?  '' : PHP_EOL;
+    echo $win32 ? '' : PHP_EOL;
 }
