@@ -1,8 +1,11 @@
 <?php
 
-$filesDirectory = "/home/fredrik/Apps/playground/album_organizer/files";
-$exifToolFilePath = "/home/fredrik/Apps/playground/album_organizer/tools/bin/exiftool";
-$seqNumberFilePath = "/home/fredrik/Apps/playground/album_organizer/tools/logs/seq.log";
+$binDirectory = __DIR__ . '/bin';
+$logDirectory = __DIR__ . '/log';
+$filesDirectory = __DIR__ . '/../files';
+
+$exifToolFilePath = "$binDirectory/exiftool";
+$seqNumberFilePath = "$logDirectory/seq.log";
 
 if (!file_exists($exifToolFilePath)) {
   echo "\n";
@@ -35,6 +38,10 @@ function extractFileYear(string $dateTimeData)
 function filterDirectories($file)
 {
   return mime_content_type($file) !== 'directory';
+}
+
+if (!is_dir($logDirectory)) {
+  mkdir($logDirectory);
 }
 
 if (!file_exists($seqNumberFilePath)) {
