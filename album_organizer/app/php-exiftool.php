@@ -21,31 +21,7 @@ if (!is_dir($filesDirectory)) {
   exit;
 }
 
-function getFileDateTimeData(string $parameter, string $file)
-{
-  global $exifToolFilePath;
-  $exifToolCommand = sprintf("%s -T -%s -d %s %s", $exifToolFilePath, $parameter, '"%Y%m%d%H%M%S"', $file);
-  return trim(shell_exec($exifToolCommand));
-}
-
-function extractFileDateTimeTag(array $tags, string $file)
-{
-  foreach ($tags as $tag) {
-    if (strlen(getFileDateTimeData($tag, $file)) === 14) {
-      return getFileDateTimeData($tag, $file);
-    }
-  }
-}
-
-function extractFileYear(string $dateTimeData)
-{
-  return substr($dateTimeData, 0, 4);
-}
-
-function filterDirectories($file)
-{
-  return mime_content_type($file) !== 'directory';
-}
+require_once('inc/helpers.php');
 
 if (!is_dir($logDirectory)) {
   mkdir($logDirectory);
@@ -86,9 +62,6 @@ foreach ($files as $file) {
   $fileExtension = '';
 
   $mimeType = mime_content_type($file);
-
-  // echo "Now processing: $file\n";
-  // echo "MimeType: $mimeType\n";
 
   switch ($mimeType) {
     case 'image/jpeg':
@@ -135,7 +108,7 @@ foreach ($files as $file) {
     }
 
     $randomHex = bin2hex(random_bytes(2));
-    $paddedSeq = str_pad($seq, 8, 0, STR_PAD_LEFT); // 00000001
+    $paddedSeq = str_pad($seq, 8, 0, STR_PAD_LEFT);
 
     $newFileName = $dateTimeData . '_' . $randomHex . '_' . $paddedSeq . '.' . $fileExtension;
     $newFilePath = "$directoryName/$newFileName";
