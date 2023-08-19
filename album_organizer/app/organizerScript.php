@@ -111,7 +111,7 @@ foreach ($files as $file) {
         echo "New file-path: ./$newFilePath" . PHP_EOL;
 
     } else {
-        $directoryName = $helper->extractFileYear($dateTimeData);
+        $directoryName = $helper->extractYear($dateTimeData);
 
         if (!is_dir($directoryName)) {
             mkdir($directoryName);

@@ -8,7 +8,7 @@ final class OrganizerHelpers
         $this->exifToolFilePath = $exifToolFilePath;
     }
 
-    public function extractFileYear(string $dateTimeData)
+    public function extractYear(string $dateTimeData)
     {
         return substr($dateTimeData, 0, 4);
     }
