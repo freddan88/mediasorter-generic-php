@@ -132,5 +132,5 @@ foreach ($files as $file) {
 
     }
 
-    echo $win32 ?  '' : PHP_EOL;
+    echo PHP_EOL;
 }
