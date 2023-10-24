@@ -117,10 +117,11 @@ foreach ($files as $file) {
             mkdir($directoryName);
         }
 
-        $randomHex = bin2hex(random_bytes(2));
+        // $randomHex = bin2hex(random_bytes(2));
         $paddedSeq = str_pad($seq, 8, 0, STR_PAD_LEFT);
 
-        $newFileName = $dateTimeData . '_' . $randomHex . '_' . $paddedSeq . '.' . $fileExtension;
+        // $newFileName = $dateTimeData . '_' . $randomHex . '_' . $paddedSeq . '.' . $fileExtension;
+        $newFileName = $dateTimeData . '_' . $paddedSeq . '.' . $fileExtension;
         $newFilePath = "$directoryName/$newFileName";
 
         file_put_contents($seqNumberFilePath, ++$seq);
