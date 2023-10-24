@@ -7,9 +7,9 @@ $filesDirectory = __DIR__ . '/../files';
 $seqNumberFilePath = "$logDirectory/seq.log";
 $exifToolFilePath = "$binDirectory/exiftool";
 
-require_once(__DIR__ . '/inc/OrganizerHelpers.php');
+require_once(__DIR__ . '/inc/OrganizerHelper.php');
 
-$helper = new OrganizerHelpers($exifToolFilePath);
+$helper = new OrganizerHelper($exifToolFilePath);
 
 $win32 = false;
 

@@ -1,16 +1,18 @@
 <?php
 
-final class OrganizerHelpers
+final class OrganizerHelper
 {
     private $exifToolFilePath = '';
 
-    function __construct(string $exifToolFilePath) {
+    function __construct(string $exifToolFilePath)
+    {
         $this->exifToolFilePath = $exifToolFilePath;
     }
 
-    public function extractYear(string $dateTimeData)
+    private function getFileDateTimeData(string $parameter, string $file)
     {
-        return substr($dateTimeData, 0, 4);
+        $exifToolCommand = sprintf("%s -T -%s -d %s %s", $this->exifToolFilePath, $parameter, '"%Y%m%d%H%M%S"', $file);
+        return trim(shell_exec($exifToolCommand));
     }
 
     public function getFilesInDirectory(string $filesDirectory): array
@@ -32,9 +34,8 @@ final class OrganizerHelpers
         }
     }
 
-    private function getFileDateTimeData(string $parameter, string $file)
+    public function extractYear(string $dateTimeData)
     {
-        $exifToolCommand = sprintf("%s -T -%s -d %s %s", $this->exifToolFilePath, $parameter, '"%Y%m%d%H%M%S"', $file);
-        return trim(shell_exec($exifToolCommand));
+        return substr($dateTimeData, 0, 4);
     }
 }
