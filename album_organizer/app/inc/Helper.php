@@ -40,14 +40,14 @@ class Helper
         $seqNumberFilePath = "$this->logDirectory/seq.log";
 
         if (!file_exists($seqNumberFilePath)) {
-            file_put_contents($seqNumberFilePath, 1);
+            file_put_contents($seqNumberFilePath, 0);
         }
 
         $seqNumber = (int) trim(file_get_contents($seqNumberFilePath));
 
-        if ($seqNumber < 1) {
-            file_put_contents($seqNumberFilePath, 1);
-            $seqNumber = 1;
+        if ($seqNumber < 0) {
+            file_put_contents($seqNumberFilePath, 0);
+            $seqNumber = 0;
         }
 
         return $seqNumber;
@@ -56,7 +56,7 @@ class Helper
     public function updateSequenceNumber(int $seqNumber): void
     {
         $seqNumberFilePath = "$this->logDirectory/seq.log";
-        file_put_contents($seqNumberFilePath, ++$seqNumber);
+        file_put_contents($seqNumberFilePath, $seqNumber);
     }
 
     public function getNewFilePath(string $basePath, string $fileName): string

@@ -4,7 +4,6 @@ class FileProcessor
 {
     public function file(Helper $helper, bool $fileError, null|string $dateTimeData, int $seqNumber, string $fileExtension, $file)
     {
-
         if ($fileError || is_null($dateTimeData)) {
             $directoryName = 'unsupported';
             $helper->createDirectoryIfMissing($directoryName);
@@ -23,8 +22,8 @@ class FileProcessor
             $helper->updateSequenceNumber($seqNumber);
             $randomHex = bin2hex(random_bytes(2));
 
-            // $newFileName = $dateTimeData . '_' . $randomHex . '_' . $paddedSeq . '.' . $fileExtension;
-            $newFileName = $dateTimeData . '_' . $paddedSeqNumber . '.' . $fileExtension;
+            $newFileName = $dateTimeData . '_' . $randomHex . '_' . $paddedSeqNumber . '.' . $fileExtension;
+            // $newFileName = $dateTimeData . '_' . $paddedSeqNumber . '.' . $fileExtension;
 
             $newFilePath = $helper->getNewFilePath($directoryName, $newFileName);
             rename($file, $newFilePath);

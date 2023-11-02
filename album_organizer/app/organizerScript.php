@@ -16,9 +16,10 @@ $seqNumber = $helper->initializeSequenceNumber();
 $files = $validator->directoryHasFiles($filesDirectory);
 
 foreach ($files as $file) {
-    $fileError = false;
-    $fileExtension = '';
     $dateTimeData = null;
+    $fileExtension = '';
+    $fileError = false;
+
     $mimeType = mime_content_type($file);
 
     switch ($mimeType) {
@@ -42,5 +43,5 @@ foreach ($files as $file) {
             break;
     }
 
-    $process->file($helper, $fileError, $dateTimeData, $seqNumber, $fileExtension, $file);
+    $process->file($helper, $fileError, $dateTimeData, ++$seqNumber, $fileExtension, $file);
 }
