@@ -31,6 +31,8 @@ foreach ($files as $file) {
 
     $mimeType = mime_content_type($file);
 
+    die(var_dump($file));
+
     switch ($mimeType) {
         case 'image/jpeg':
             $fileExtension = 'jpg';
