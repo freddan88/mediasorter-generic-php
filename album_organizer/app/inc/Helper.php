@@ -5,10 +5,16 @@ class Helper
     private $exifToolFilePath = '';
     private $logDirectory = '';
 
-    function __construct(string $exifToolFilePath, string $logDirectory)
+    function __construct(string $exifToolFilePath)
     {
         $this->exifToolFilePath = $exifToolFilePath;
-        $this->logDirectory = $logDirectory;
+        $this->logDirectory = __DIR__ . '/log';
+    }
+
+    private function getFileDateTimeData(string $tagName, $file)
+    {
+        $exifToolCommand = sprintf("%s -T -%s -d %s %s", $this->exifToolFilePath, $tagName, '"%Y%m%d%H%M%S"', $file);
+        return trim(shell_exec($exifToolCommand));
     }
 
     public function printMessage(string $message): void
@@ -25,6 +31,8 @@ class Helper
 
     public function initializeSequenceNumber(): int
     {
+        echo PHP_EOL;
+
         if (!is_dir($this->logDirectory)) {
             mkdir($this->logDirectory);
         }
@@ -54,5 +62,21 @@ class Helper
     public function getNewFilePath(string $basePath, string $fileName): string
     {
         return "$basePath/$fileName";
+    }
+
+    public function extractFileDateTimeTag(array $tags, $file)
+    {
+        foreach ($tags as $tag) {
+            $fileDateTimeData = $this->getFileDateTimeData($tag, $file);
+            if (strlen($fileDateTimeData) === 14) {
+                return $fileDateTimeData;
+            }
+        }
+        return null;
+    }
+
+    public function extractYear(string $dateTimeData)
+    {
+        return substr($dateTimeData, 0, 4);
     }
 }

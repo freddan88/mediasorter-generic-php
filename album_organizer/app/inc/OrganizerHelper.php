@@ -28,10 +28,12 @@ final class OrganizerHelper
     public function extractFileDateTimeTag(array $tags, string $file)
     {
         foreach ($tags as $tag) {
-            if (strlen($this->getFileDateTimeData($tag, $file)) === 14) {
-                return $this->getFileDateTimeData($tag, $file);
+            $fileDateTimeData = $this->getFileDateTimeData($tag, $file);
+            if (strlen($fileDateTimeData) === 14) {
+                return $fileDateTimeData;
             }
         }
+        return null;
     }
 
     public function extractYear(string $dateTimeData)

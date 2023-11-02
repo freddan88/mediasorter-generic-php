@@ -29,7 +29,7 @@ class Validator
         }
     }
 
-    public function directoryHasFiles(string $filesDirectory): void
+    public function directoryHasFiles(string $filesDirectory): array
     {
         function filterDirectories($file)
         {
@@ -47,11 +47,13 @@ class Validator
         $files = preg_grep('/^([^.])/', scandir($filesDirectory));
         $files = array_filter($files, "filterDirectories");
 
-        if (count($files) === 0) {
+        if (!is_array($files) && count($files) === 0) {
             echo PHP_EOL;
             echo "No files to sort and rename!!!";
             echo $this->win32 ? '' : PHP_EOL, PHP_EOL;
             exit;
         }
+
+        return $files;
     }
 }

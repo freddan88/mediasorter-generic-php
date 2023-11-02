@@ -69,8 +69,8 @@ echo PHP_EOL;
 foreach ($files as $file) {
 
     $fileError = false;
-    $dateTimeData = '';
     $fileExtension = '';
+    $dateTimeData = null;
 
     $mimeType = mime_content_type($file);
 
@@ -95,7 +95,7 @@ foreach ($files as $file) {
             break;
     }
 
-    if ($fileError) {
+    if ($fileError || is_null($dateTimeData)) {
         $directoryName = 'unsupported';
 
         if (!is_dir($directoryName)) {
