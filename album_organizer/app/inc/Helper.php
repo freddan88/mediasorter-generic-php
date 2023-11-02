@@ -8,7 +8,7 @@ class Helper
     function __construct(string $exifToolFilePath)
     {
         $this->exifToolFilePath = $exifToolFilePath;
-        $this->logDirectory = __DIR__ . '/log';
+        $this->logDirectory = __DIR__ . '/../log';
     }
 
     private function getFileDateTimeData(string $tagName, $file)

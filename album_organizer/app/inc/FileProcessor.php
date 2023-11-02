@@ -4,7 +4,6 @@ class FileProcessor
 {
     public function file(Helper $helper, bool $fileError, null|string $dateTimeData, int $seqNumber, string $fileExtension, $file)
     {
-        echo PHP_EOL;
 
         if ($fileError || is_null($dateTimeData)) {
             $directoryName = 'unsupported';
@@ -12,6 +11,7 @@ class FileProcessor
 
             $newFilePath = $helper->getNewFilePath($directoryName, strtolower($file));
             rename($file, $newFilePath);
+            echo PHP_EOL;
 
             $helper->printMessage("Old file-path: ./$file");
             $helper->printMessage("New file-path: ./$newFilePath");
@@ -27,10 +27,13 @@ class FileProcessor
             $newFileName = $dateTimeData . '_' . $paddedSeqNumber . '.' . $fileExtension;
 
             $newFilePath = $helper->getNewFilePath($directoryName, $newFileName);
-            rename($file, $helper->getNewFilePath($directoryName, $newFilePath));
+            rename($file, $newFilePath);
+            echo PHP_EOL;
 
             $helper->printMessage("Old file-path: ./$file");
             $helper->printMessage("New file-path: ./$newFilePath");
         }
+
+        echo PHP_EOL;
     }
 }
