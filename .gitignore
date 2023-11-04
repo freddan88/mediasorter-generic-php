@@ -3,4 +3,5 @@
 /album_organizer/app/bak
 /album_organizer/app/log
 /album_organizer/app/bin/*
+/album_organizer/config.ini
 !/album_organizer/app/bin/README.md
