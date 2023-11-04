@@ -1,7 +1,7 @@
 <?php
 
 $filesDirectory = __DIR__ . '/../files';
-$exifToolPath = '/bin/exiftool';
+$exifToolPath = __DIR__ . '/bin/exiftool.exe';
 
 require_once(__DIR__ . '/inc/FileProcessor.php');
 require_once(__DIR__ . '/inc/Validator.php');
@@ -38,5 +38,3 @@ foreach ($files as $file) {
 
     $processor->processFile($helper, ++$seqNumber, $mimeType, $file);
 }
-
-echo PHP_EOL;

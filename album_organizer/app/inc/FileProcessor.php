@@ -41,10 +41,10 @@ class FileProcessor
 
             $paddedSeqNumber = str_pad($seqNumber, 8, 0, STR_PAD_LEFT);
             $helper->updateSequenceNumber($seqNumber);
-            $randomHex = bin2hex(random_bytes(2));
 
-            $newFileName = $this->dateTimeData . '_' . $randomHex . '_' . $paddedSeqNumber . '.' . $this->fileExtension;
-            // $newFileName = $this->dateTimeData . '_' . $paddedSeqNumber . '.' . $this->$fileExtension;
+            $randomHex = bin2hex(random_bytes(1));
+            $newFileName = $this->dateTimeData . '_' . $paddedSeqNumber . '_' . $randomHex . '.' . $this->fileExtension;
+            // $newFileName = $this->dateTimeData . '_' . $paddedSeqNumber . '.' . $this->fileExtension;
 
             $newFilePath = $helper->getNewFilePath($directoryName, $newFileName);
             rename($file, $newFilePath);

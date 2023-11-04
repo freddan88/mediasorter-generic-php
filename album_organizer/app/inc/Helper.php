@@ -31,8 +31,6 @@ class Helper
 
     public function initializeSequenceNumber(): int
     {
-        echo PHP_EOL;
-
         if (!is_dir($this->logDirectory)) {
             mkdir($this->logDirectory);
         }
