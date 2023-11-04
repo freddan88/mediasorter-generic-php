@@ -2,9 +2,30 @@
 
 class FileProcessor
 {
-    public function file(Helper $helper, bool $fileError, null|string $dateTimeData, int $seqNumber, string $fileExtension, $file)
+    private $dateTimeData = null;
+    private $fileExtension = '';
+    private $fileError = false;
+
+    private function resetFileOptions()
     {
-        if ($fileError || is_null($dateTimeData)) {
+        $this->dateTimeData = null;
+        $this->fileExtension = '';
+        $this->fileError = false;
+    }
+
+    public function setFileError()
+    {
+        $this->fileError = true;
+    }
+
+    public function setFileOptions(string $fileExtension, null|string $dateTimeData)
+    {
+        $this->fileExtension = $fileExtension;
+        $this->dateTimeData = $dateTimeData;
+    }
+    public function processFile(Helper $helper, int $seqNumber, string $mimeType, $file)
+    {
+        if ($this->fileError || is_null($this->dateTimeData)) {
             $directoryName = 'unsupported';
             $helper->createDirectoryIfMissing($directoryName);
 
@@ -15,24 +36,29 @@ class FileProcessor
             $helper->printMessage("Old file-path: ./$file");
             $helper->printMessage("New file-path: ./$newFilePath");
         } else {
-            $directoryName = $helper->extractYear($dateTimeData);
+            $directoryName = $helper->extractYear($this->dateTimeData);
             $helper->createDirectoryIfMissing($directoryName);
 
             $paddedSeqNumber = str_pad($seqNumber, 8, 0, STR_PAD_LEFT);
             $helper->updateSequenceNumber($seqNumber);
             $randomHex = bin2hex(random_bytes(2));
 
-            $newFileName = $dateTimeData . '_' . $randomHex . '_' . $paddedSeqNumber . '.' . $fileExtension;
-            // $newFileName = $dateTimeData . '_' . $paddedSeqNumber . '.' . $fileExtension;
+            $newFileName = $this->dateTimeData . '_' . $randomHex . '_' . $paddedSeqNumber . '.' . $this->fileExtension;
+            // $newFileName = $this->dateTimeData . '_' . $paddedSeqNumber . '.' . $this->$fileExtension;
 
             $newFilePath = $helper->getNewFilePath($directoryName, $newFileName);
             rename($file, $newFilePath);
-            echo PHP_EOL;
 
+            echo PHP_EOL;
+            $helper->printMessage("------------------------------------");
+            $helper->printMessage("File extension: $this->fileExtension");
+            $helper->printMessage("File mime-type: $mimeType");
+            echo PHP_EOL;
             $helper->printMessage("Old file-path: ./$file");
             $helper->printMessage("New file-path: ./$newFilePath");
+            $helper->printMessage("------------------------------------");
         }
 
-        echo PHP_EOL;
+        $this->resetFileOptions();
     }
 }
