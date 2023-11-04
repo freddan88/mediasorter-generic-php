@@ -1,19 +1,20 @@
 <?php
 
-$filesDirectory = __DIR__ . '/../files';
-$exifToolPath = __DIR__ . '/bin/exiftool.exe';
+declare(strict_types=1);
 
-require_once(__DIR__ . '/inc/FileProcessor.php');
-require_once(__DIR__ . '/inc/Validator.php');
 require_once(__DIR__ . '/inc/Helper.php');
+require_once(__DIR__ . '/inc/Validator.php');
+require_once(__DIR__ . '/inc/FileProcessor.php');
 
 $validator = new Validator();
+$config = $validator->configFile();
+
 $processor = new FileProcessor();
-$helper = new Helper($exifToolPath);
-$validator->exifToolExists($exifToolPath);
-$validator->directoryExists($filesDirectory);
+$helper = new Helper($config->exif_tool_path);
+$validator->exifToolExists($config->exif_tool_path);
+$validator->directoryExists($config->files_directory);
+$files = $validator->directoryHasFiles($config->files_directory);
 $seqNumber = $helper->initializeSequenceNumber();
-$files = $validator->directoryHasFiles($filesDirectory);
 
 foreach ($files as $file) {
     $mimeType = mime_content_type($file);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class Validator
 {
     private $win32 = false;
@@ -13,17 +15,30 @@ class Validator
     {
         if (!file_exists($exifToolFilePath)) {
             echo PHP_EOL;
-            echo "Error: Exiftool not found!!!";
+            echo "Error: Exiftool not found";
             echo $this->win32 ? '' : PHP_EOL, PHP_EOL;
             exit;
         }
+    }
+
+    public function configFile(){
+        $configPath = __DIR__ . '/../../config.ini';
+        if (!file_exists($configPath)) {
+            echo PHP_EOL;
+            echo 'Error: Configuration-file missing' . PHP_EOL;
+            echo "Please create the file: 'config.ini' in the directory: album_organizer";
+            echo $this->win32 ? '' : PHP_EOL, PHP_EOL;
+            exit;
+        }
+
+        return (object) parse_ini_file($configPath, true);
     }
 
     public function directoryExists(string $filesDirectory): void
     {
         if (!is_dir($filesDirectory)) {
             echo PHP_EOL;
-            echo "Error: No files-directory!!!";
+            echo "Error: No files-directory";
             echo $this->win32 ? '' : PHP_EOL, PHP_EOL;
             exit;
         }
@@ -49,7 +64,7 @@ class Validator
 
         if (!is_array($files) || count($files) === 0) {
             echo PHP_EOL;
-            echo "No files to sort and rename!!!";
+            echo "No files to sort and rename";
             echo $this->win32 ? '' : PHP_EOL, PHP_EOL;
             exit;
         }

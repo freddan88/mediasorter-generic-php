@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class FileProcessor
 {
     private $dateTimeData = null;
@@ -39,7 +41,7 @@ class FileProcessor
             $directoryName = $helper->extractYear($this->dateTimeData);
             $helper->createDirectoryIfMissing($directoryName);
 
-            $paddedSeqNumber = str_pad($seqNumber, 8, 0, STR_PAD_LEFT);
+            $paddedSeqNumber = str_pad(strval($seqNumber), 8, '0', STR_PAD_LEFT);
             $helper->updateSequenceNumber($seqNumber);
 
             $randomHex = bin2hex(random_bytes(1));
