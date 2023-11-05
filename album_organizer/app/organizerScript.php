@@ -29,7 +29,7 @@ foreach ($files as $file) {
             $processor->setFileOptions('png', $helper->extractFileDateTimeTag($tags, $file));
             break;
         case 'video/quicktime':
-            $tags = ['MediaCreateDate'];
+            $tags = ['CreationDate'];
             $processor->setFileOptions('mov', $helper->extractFileDateTimeTag($tags, $file));
             break;
         case 'video/mpeg':
