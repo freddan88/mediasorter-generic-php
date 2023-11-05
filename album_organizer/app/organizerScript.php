@@ -40,4 +40,4 @@ foreach ($files as $file) {
     $processor->processFile($helper, ++$seqNumber, $mimeType, $file);
 }
 
-echo PHP_EOL;
+$helper->printMessage('');
