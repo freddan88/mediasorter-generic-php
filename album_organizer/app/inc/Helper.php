@@ -66,6 +66,9 @@ class Helper
 
     public function extractFileDateTimeTag(array $tags, $file)
     {
+        if (preg_match('/^\S.*\s.*\S$/', $file)) {
+            return null;
+        }
         foreach ($tags as $tag) {
             $fileDateTimeData = $this->getFileDateTimeData($tag, $file);
             if (strlen($fileDateTimeData) === 14) {
