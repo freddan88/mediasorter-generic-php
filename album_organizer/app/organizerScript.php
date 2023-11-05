@@ -32,6 +32,10 @@ foreach ($files as $file) {
             $tags = ['MediaCreateDate'];
             $processor->setFileOptions('mov', $helper->extractFileDateTimeTag($tags, $file));
             break;
+        case 'video/mpeg':
+            $tags = ['FileModifyDate'];
+            $processor->setFileOptions('mpg', $helper->extractFileDateTimeTag($tags, $file));
+            break;
         default:
             $processor->setFileError();
             break;
