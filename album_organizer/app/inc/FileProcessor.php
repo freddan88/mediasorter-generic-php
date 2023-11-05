@@ -35,8 +35,10 @@ class FileProcessor
             rename($file, $newFilePath);
             echo PHP_EOL;
 
+            $helper->printMessage("------------------------------------");
             $helper->printMessage("Old file-path: ./$file");
             $helper->printMessage("New file-path: ./$newFilePath");
+            $helper->printMessage("------------------------------------");
         } else {
             $directoryName = $helper->extractYear($this->dateTimeData);
             $helper->createDirectoryIfMissing($directoryName);
@@ -50,8 +52,8 @@ class FileProcessor
 
             $newFilePath = $helper->getNewFilePath($directoryName, $newFileName);
             rename($file, $newFilePath);
-
             echo PHP_EOL;
+
             $helper->printMessage("------------------------------------");
             $helper->printMessage("File extension: $this->fileExtension");
             $helper->printMessage("File mime-type: $mimeType");
