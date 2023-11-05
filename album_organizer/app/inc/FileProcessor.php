@@ -8,6 +8,23 @@ class FileProcessor
     private $fileExtension = '';
     private $fileError = false;
 
+    private function printFileInfo(Helper $helper, string $mimeType, string $newFilePath, $file)
+    {
+        echo PHP_EOL;
+
+        $helper->printMessage("------------------------------------");
+        if ($this->fileExtension) {
+            $helper->printMessage("File extension: $this->fileExtension");
+        }
+        $helper->printMessage("File mime-type: $mimeType");
+
+        echo PHP_EOL;
+
+        $helper->printMessage("Old file-path: ./$file");
+        $helper->printMessage("New file-path: ./$newFilePath");
+        $helper->printMessage("------------------------------------");
+    }
+
     private function resetFileOptions()
     {
         $this->dateTimeData = null;
@@ -33,16 +50,11 @@ class FileProcessor
 
             $newFilePath = $helper->getNewFilePath($directoryName, strtolower($file));
             rename($file, $newFilePath);
-            echo PHP_EOL;
 
-            $helper->printMessage("------------------------------------");
-            $helper->printMessage("Old file-path: ./$file");
-            $helper->printMessage("New file-path: ./$newFilePath");
-            $helper->printMessage("------------------------------------");
+            $this->printFileInfo($helper, $mimeType, $newFilePath, $file);
         } else {
             $directoryName = $helper->extractYear($this->dateTimeData);
             $helper->createDirectoryIfMissing($directoryName);
-
             $paddedSeqNumber = str_pad(strval($seqNumber), 8, '0', STR_PAD_LEFT);
             $helper->updateSequenceNumber($seqNumber);
 
@@ -52,15 +64,8 @@ class FileProcessor
 
             $newFilePath = $helper->getNewFilePath($directoryName, $newFileName);
             rename($file, $newFilePath);
-            echo PHP_EOL;
 
-            $helper->printMessage("------------------------------------");
-            $helper->printMessage("File extension: $this->fileExtension");
-            $helper->printMessage("File mime-type: $mimeType");
-            echo PHP_EOL;
-            $helper->printMessage("Old file-path: ./$file");
-            $helper->printMessage("New file-path: ./$newFilePath");
-            $helper->printMessage("------------------------------------");
+            $this->printFileInfo($helper, $mimeType, $newFilePath, $file);
         }
 
         $this->resetFileOptions();
