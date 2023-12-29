@@ -55,9 +55,9 @@ class FileProcessor
         } else {
             $directoryName = $helper->extractYear($this->dateTimeData);
             $helper->createDirectoryIfMissing($directoryName);
-            $paddedSeqNumber = str_pad(strval($seqNumber), 8, '0', STR_PAD_LEFT);
+            $paddedSeqNumber = str_pad(strval($seqNumber), 10, '0', STR_PAD_LEFT);
             $helper->updateSequenceNumber($seqNumber);
-            $randomHex = bin2hex(random_bytes(2));
+            $randomHex = bin2hex(random_bytes(3));
 
             $newFileName = $this->dateTimeData . '_' . $paddedSeqNumber . '_' . $randomHex . '.' . $this->fileExtension;
             // $newFileName = $this->dateTimeData . '_' . $paddedSeqNumber . '.' . $this->fileExtension;
