@@ -42,7 +42,7 @@ class FileProcessor
         $this->fileExtension = $fileExtension;
         $this->dateTimeData = $dateTimeData;
     }
-    public function processFile(Helper $helper, int $seqNumber, string $mimeType, $file)
+    public function processFile(Helper $helper, object $config, int $seqNumber, string $mimeType, $file)
     {
         if ($this->fileError || is_null($this->dateTimeData)) {
             $directoryName = 'unsupported';
@@ -56,11 +56,22 @@ class FileProcessor
             $directoryName = $helper->extractYear($this->dateTimeData);
             $helper->createDirectoryIfMissing($directoryName);
             $paddedSeqNumber = str_pad(strval($seqNumber), 10, '0', STR_PAD_LEFT);
-            $helper->updateSequenceNumber($seqNumber);
             $randomHex = bin2hex(random_bytes(3));
 
+            if ($config->file_name_style !== 'short') {
+                $helper->updateSequenceNumber($seqNumber);
+            }
+
             $newFileName = $this->dateTimeData . '_' . $paddedSeqNumber . '_' . $randomHex . '.' . $this->fileExtension;
-            // $newFileName = $this->dateTimeData . '_' . $paddedSeqNumber . '.' . $this->fileExtension;
+
+            switch ($config->file_name_style) {
+                case 'short':
+                    $newFileName = $this->dateTimeData . '_' . $randomHex . '.' . $this->fileExtension;
+                    break;
+                case 'medium':
+                    $newFileName = $this->dateTimeData . '_' . $paddedSeqNumber . '.' . $this->fileExtension;
+                    break;
+            }
 
             $newFilePath = $helper->getNewFilePath($directoryName, $newFileName);
             rename($file, $newFilePath);

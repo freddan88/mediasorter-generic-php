@@ -41,7 +41,7 @@ foreach ($files as $file) {
             break;
     }
 
-    $processor->processFile($helper, ++$seqNumber, $mimeType, $file);
+    $processor->processFile($helper, $config, ++$seqNumber, $mimeType, $file);
 }
 
 $helper->printMessage('');
